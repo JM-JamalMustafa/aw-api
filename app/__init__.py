@@ -20,7 +20,7 @@ app = Flask(__name__)
 def home():
     return "APIs are working on the central server"
 
-app.config["JWT_SECRET_KEY"] = "40e1a1c45a2eac697b9f5fb419adbe4c"
+app.config["JWT_SECRET_KEY"] = "your_key"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=8)
 jwt = JWTManager(app)
 api = Api(app, doc='/docs')  # Swagger UI will be available at /docs instead of the root
@@ -56,22 +56,7 @@ event_model = ns.model('Event', {
 
 # Register routes here
 api.add_resource(Register, '/api/register')
-api.add_resource(Register, '/api/register')
 api.add_resource(Login, '/api/login')
 api.add_resource(ChangePassword, '/api/change-password')
-# api.add_resource(SubmitData, '/api/data')
-# api.add_resource(FetchData,'/api/submit')
-# api.add_resource(FetchActivityDataEndpoint,'/api/submit')
 api.add_resource(Logout, '/api/logout')
 api.add_resource(SubmitData,'/api/submit')
-# from .dashboard import dashboard_blueprint
-
-# app.register_blueprint(dashboard_blueprint, url_prefix='/dashboard')
-
-# Start the Fetcher to periodically fetch data
-# with app.app_context():
-#     fetcher.start()
-
-# # Stop the fetcher on exit
-# import atexit
-# atexit.register(fetcher.stop)

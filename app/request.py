@@ -6,10 +6,10 @@ import time
 import os
 
 # ActivityWatch Database Path (Adjust this for your setup)
-AW_DB_PATH = "C:/Users/Fafcom/AppData/Local/activitywatch/activitywatch/aw-server/peewee-sqlite.v2.db"
+AW_DB_PATH = your_path"
 
 # Centralized Flask API URL
-API_SERVER_URL = "http://192.168.1.14:5000/api"
+API_SERVER_URL = "url/api"
 FETCH_INTERVAL = 1  # Fetch every 1 hour
 TOKEN_FILE = "user_tokens.json"  # File to store user tokens
 

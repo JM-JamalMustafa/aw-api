@@ -10,7 +10,7 @@ from peewee import (
 from datetime import datetime
 
 # Database initialization
-db = SqliteDatabase('jamal3.db')
+db = SqliteDatabase('activity.db')
 
 # Define the User model
 class User(Model):
@@ -37,7 +37,7 @@ class Event(Model):
     duration = IntegerField()  # Duration in seconds (can also be a FloatField if fractional durations)
     app = CharField()
     title = CharField(null=True)
-    bucket_id = CharField(null=True)  # Foreign key reference to bucket (assuming bucket_id 
+    client = CharField(null=True)  # Foreign key reference to bucket (assuming bucket_id 
      # Back reference to 'events'
 
     class Meta:

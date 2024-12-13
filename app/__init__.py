@@ -4,14 +4,11 @@ from flask import Flask, jsonify
 from flask_socketio import SocketIO
 from flask_jwt_extended import JWTManager, get_jwt_identity
 from flask_restx import Api, fields,Namespace
-from app.model import initialize_db
-from app.resource import Register, Login, ChangePassword,Logout,SubmitData,ns #, FetchAWServerData,,FetchActivityDataEndpoint
+from app.model import initialize_db,db
+from app.resource import Register, Login, ChangePassword,Logout,SubmitData,ns,AdminFetchEvents,SettingsResource
 from datetime import timedelta
 from cachetools import TTLCache
-
-# Initialize Fetcher
-# fetcher = FetchAWServerData()
-
+from app.api import ServerAPI
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -20,6 +17,9 @@ app = Flask(__name__)
 def home():
     return "APIs are working on the central server"
 
+
+
+testing = app.config["TESTING"]
 app.config["JWT_SECRET_KEY"] = "40e1a1c45a2eac697b9f5fb419adbe4c"
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=8)
 jwt = JWTManager(app)
@@ -56,22 +56,13 @@ event_model = ns.model('Event', {
 
 # Register routes here
 api.add_resource(Register, '/api/register')
-api.add_resource(Register, '/api/register')
 api.add_resource(Login, '/api/login')
 api.add_resource(ChangePassword, '/api/change-password')
-# api.add_resource(SubmitData, '/api/data')
-# api.add_resource(FetchData,'/api/submit')
-# api.add_resource(FetchActivityDataEndpoint,'/api/submit')
 api.add_resource(Logout, '/api/logout')
 api.add_resource(SubmitData,'/api/submit')
-# from .dashboard import dashboard_blueprint
+api.add_resource(AdminFetchEvents, '/api/fetch')
+api.add_resource(SettingsResource, '/api/settings', defaults={"key": ""})
+api.add_resource(SettingsResource, '/api/settings/<string:key>')
 
-# app.register_blueprint(dashboard_blueprint, url_prefix='/dashboard')
 
-# Start the Fetcher to periodically fetch data
-# with app.app_context():
-#     fetcher.start()
-
-# # Stop the fetcher on exit
-# import atexit
-# atexit.register(fetcher.stop)
+app.api = ServerAPI(db, testing)
